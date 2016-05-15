@@ -14,8 +14,8 @@
 " rgb(255, 255, 255)
 " rgba(255, 255, 255, 0.5)
 "
-" To enable, map something to ':call g:chromaHighlight()<CR>'
-" ex: map <Leader>h :call g:chromaHighlight()<CR>
+" To enable, map something to ':call g:ChromaHighlight()<CR>'
+" ex: map <Leader>h :call g:ChromaHighlight()<CR>
 
 if exists("g:loaded_chroma") || &cp
   finish
@@ -30,7 +30,7 @@ let s:hexMatch = '#\(\x\{6}\|\x\{3}\)'
 let s:rgbMatch = 'rgba\?(\(\d\{1,3}\)\s*,\s*\(\d\{1,3}\)\s*,\s*\(\d\{1,3}\).*)'
 let s:matchPats = [s:hexMatch, s:rgbMatch]
 
-function! g:chromaHighlight()
+function! g:ChromaHighlight()
   if !has("gui_running")
     echo "Highlighting only works with a graphical version of vim"
     return
