@@ -14,12 +14,9 @@
 " rgb(255, 255, 255)
 " rgba(255, 255, 255, 0.5)
 "
-" To enable, map something to ':call s:ChromaHighlight()<CR>'
-" ex: map <Leader>h :call s:ChromaHighlight()<CR>
+" To enable, map something to ':call g:ChromaHighlight()<CR>'
+" ex: map <Leader>h :call g:ChromaHighlight()<CR>
 
-if exists("g:loaded_chroma") || &cp
-  finish
-endif
 let g:loaded_chroma = 1
 
 let s:colored = 0
@@ -30,11 +27,8 @@ let s:hexMatch = '#\(\x\{6}\|\x\{3}\)'
 let s:rgbMatch = 'rgba\?(\(\d\{1,3}\)\s*,\s*\(\d\{1,3}\)\s*,\s*\(\d\{1,3}\).*)'
 let s:matchPats = [s:hexMatch, s:rgbMatch]
 
-function! s:ChromaHighlight()
-  if !has("gui_running")
-    echo "Highlighting only works with a graphical version of vim"
-    return
-  elseif s:colored == 1
+function! g:ChromaHighlight()
+  if s:colored == 1
     echo "Unhighlighting colors"
     for c in s:matches
       call matchdelete(c)
@@ -81,6 +75,11 @@ endfunction
 " extracts hex color from s:lastMatch in format: '#000000'
 function! s:extractHexColor()
   if strpart(s:lastMatch, 0, 1) == '#'
+    let len = strlen(s:lastMatch)
+    if len == 4
+      let res = "#" . strpart(s:lastMatch, 1, 1) . strpart(s:lastMatch, 1, 1) . strpart(s:lastMatch, 2, 1) . strpart(s:lastMatch, 2, 1) . strpart(s:lastMatch, 3, 1) . strpart(s:lastMatch, 3, 1)
+      return res
+    endif
     return s:lastMatch
   endif
   " it's an rgb match
